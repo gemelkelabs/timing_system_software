@@ -1,0 +1,907 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xtsm_viewer="http://braid.phys.psu.edu/xtsm_viewer">
+  <xs:element name="XTSM" type="XTSM" />
+
+
+  <xs:complexType name="XTSM">
+    <xs:sequence>
+      <xs:element name="head" type="head" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="body" type="body" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="SequenceSelector" type="SequenceSelector" maxOccurs="1" minOccurs="1"/>
+    </xs:sequence>
+    <xs:anyAttribute processContents="lax" />
+  </xs:complexType>
+
+  <xs:complexType name="SequenceSelector">
+    <xs:annotation>
+      <xs:appinfo>
+        <xtsm_viewer:parsable value="true"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="head">
+    <xs:sequence>
+      <xs:element name="ChannelMap" type="ChannelMap" maxOccurs="1" minOccurs="1"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="ChannelMap">
+    <xs:sequence>
+      <xs:element name="Channel" type="Channel" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="TimingGroupData" type="TimingGroupData" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="Channel">
+    <xs:sequence>
+      <xs:element name="Description" type="Description" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="ChannelName" type="ChannelName" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="Comments" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="TimingGroup" type="TimingGroup" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="TimingGroupIndex" type="TimingGroupIndex" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="ConnectsTo" type="ConnectsTo" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Group" type="Group" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="HoldingValue" type="HoldingValue" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="Calibration" type="Calibration" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="MinValue" type="MinValue" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="MaxValue" type="MaxValue" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="MaxDuty" type="MaxDuty" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="MaxDuration" type="MaxDuration" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="MaxTriggers" type="MaxTriggers" maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="TimingGroupData">
+    <xs:sequence>
+      <xs:element name="Name" type="Name" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Comments" type="Comments" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="GroupNumber" type="GroupNumber" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="Description" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="ClockedBy" type="ClockedBy" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="Group" type="Group" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="ChannelCount" type="ChannelCount" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="Calibration" type="Calibration" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="Scale" type="Scale" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="ResolutionBits" type="ResolutionBits" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="ClockPeriod" type="ClockPeriod" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="SelfClockPeriod" type="SelfClockPeriod" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="DelayTrain" type="DelayTrain" maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+
+  <xs:complexType name="body">
+    <xs:sequence>
+      <xs:element name="Sequence" type="Sequence" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="Sequence">
+    <xs:sequence>
+      <xs:element name="Name" type="Name">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="Description" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="EndTime" type="EndTime" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="SubSequence" type="SubSequence" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Edge" type="Edge" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Interval" type="Interval" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="SubSequence">
+    <xs:sequence>
+      <xs:element name="Name" type="Name">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="Description" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="EndTime" type="EndTime" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="StartTime" type="StartTime" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubSequence" type="SubSequence" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Edge" type="Edge" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Interval" type="Interval" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Sample" type="Sample" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="Edge">
+    <xs:sequence>
+      <xs:element name="Name" type="Name"/>
+      <xs:element name="Description" type="Description" />
+      <xs:element name="Time" type="Time" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="Value" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OnChannel" type="OnChannel" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="Interval">
+    <xs:sequence>
+      <xs:element name="Name" type="Name"/>
+      <xs:element name="Description" type="Description" />
+      <xs:element name="StartTime" type="StartTime" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndTime" type="EndTime" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="Value" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OnChannel" type="OnChannel" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Figure" type="Figure"  maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="Sample">
+    <xs:sequence>
+      <xs:element name="Name" type="Name" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="Figure" type="Figure"  maxOccurs="1" minOccurs="0"/>
+      <xs:element name="Description" type="Description" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="TResolution" type="TResolution" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="Heap" type="Heap" maxOccurs="1" minOccurs="0" />
+      <xs:element name="StartTime" type="StartTime" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EndTime" type="EndTime" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="OnChannel" type="OnChannel" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="Script">
+    <xs:sequence>
+      <xs:element name="Name" type="Name" maxOccurs="1" minOccurs="0">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="Description" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="ScriptOutput" type="ScriptOutput" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Remote" type="Remote" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="ExecuteOnEvent" type="ExecuteOnEvent" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="ExecuteOnMainServer" type="ExecuteOnMainServer" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="ScriptBody" type="ScriptBody" maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="ExecuteOnEvent">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ScriptConsole">
+    <xs:sequence>
+      <xs:element name="std_out" type="std_out" maxOccurs="unbounded" minOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+
+  <xs:complexType name="Type">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ExecuteOnMainServer">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Remote">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="XPath">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="DataGUI">
+    <xs:sequence>
+      <xs:element name="Name" type="Name" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="Description" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="Script" type="Script"  maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="ScriptBody">
+    <xs:annotation>
+      <xs:appinfo>
+        <xtsm_viewer:fieldtype value="textarea"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:annotation>
+      <xs:appinfo>
+        <xtsm_viewer:editmode value="python"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Method">
+    <xs:annotation>
+      <xs:appinfo>
+        <xtsm_viewer:fieldtype value="textarea"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:annotation>
+      <xs:appinfo>
+        <xtsm_viewer:editmode value="python"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ScriptOutput">
+    <xs:sequence>
+      <xs:element name="Name" type="Name" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="Description" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="DataNode" type="DataNode" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Heap" type="Heap" maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="Heap">
+    <xs:sequence>
+      <xs:element name="Name" type="Name" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PullFrom" type="Description"  maxOccurs="1" minOccurs="0"/>
+      <xs:element name="Script" type="Script"  maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="HeapTo" type="HeapTo"  maxOccurs="unbounded" minOccurs="1"/>
+      <xs:element name="Description" type="Description"  maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="PullFrom">
+    <xs:sequence>
+      <xs:element name="Name" type="Name" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="XPath" type="XPath"  maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="AnalysisSpace">
+    <xs:sequence>
+      <xs:element name="DataGUI" type="DataGUI"  maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Heap" type="Heap"  maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Script" type="Script"  maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="Description" type="Description"  maxOccurs="1" minOccurs="1"/>
+      <xs:element name="Name" type="Name" maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+
+  <xs:complexType name="DataNode">
+    <xs:sequence>
+      <xs:element name="Name" type="Name"  maxOccurs="1" minOccurs="0">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Description" type="Description"  maxOccurs="1" minOccurs="0"/>
+      <xs:element name="DataLink" type="DataLink"  maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="Parameter">
+    <xs:sequence>
+      <xs:element name="Name" type="Name"  maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Value" type="Value"  maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="Figure">
+    <xs:sequence>
+      <xs:element name="Name" type="Name"  maxOccurs="1" minOccurs="0">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FigureType" type="FigureType"  maxOccurs="1" minOccurs="0">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="Instrument">
+    <xs:sequence>
+      <xs:element name="OnInstrument" type="OnInstrument"  maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ServerIPAddress" type="ServerIPAddress"  maxOccurs="1" minOccurs="1">
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+  <xs:complexType name="OnInstrument">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="InstrumentCommand">
+    <xs:sequence>
+      <xs:element name="OnInstrument" type="OnInstrument"  maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="Name"  maxOccurs="1" minOccurs="1">
+        <xs:annotation>
+          <xs:appinfo>
+            <xtsm_viewer:topline value="true"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PullData" type="PullData"  maxOccurs="1" minOccurs="0">
+      </xs:element>
+      <xs:element name="Script" type="Script"  maxOccurs="unbounded" minOccurs="0">
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="XTSM_general_atts"/>
+    <xs:attributeGroup ref="XTSM_viewer_atts"/>
+  </xs:complexType>
+
+
+  <xs:complexType name="HeapTo">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="DataLink">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Name">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ChannelName">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ClockedBy">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Calibration">
+    <xs:annotation>
+      <xs:appinfo>
+        <xtsm_viewer:parsable value="true"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Time">
+    <xs:annotation>
+      <xs:appinfo>
+        <xtsm_viewer:parsable value="true"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="StartTime">
+    <xs:annotation>
+      <xs:appinfo>
+        <xtsm_viewer:parsable value="true"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Value">
+    <xs:annotation>
+      <xs:appinfo>
+        <xtsm_viewer:parsable value="true"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="EndTime">
+    <xs:annotation>
+      <xs:appinfo>
+        <xtsm_viewer:parsable value="true"/>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="OnChannel">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Description">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Comments">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ServerIPAddress">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ConnectsTo">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Group">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="TimingGroup">
+    <xs:simpleContent>
+      <xs:extension base="xs:nonNegativeInteger">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ChannelCount">
+    <xs:simpleContent>
+      <xs:extension base="xs:nonNegativeInteger">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="TimingGroupIndex">
+    <xs:simpleContent>
+      <xs:extension base="xs:nonNegativeInteger">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ResolutionBits">
+    <xs:simpleContent>
+      <xs:extension base="xs:nonNegativeInteger">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="HoldingValue">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ClockPeriod">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="SelfClockPeriod">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Scale">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="MinValue">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="MaxValue">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="MaxDuty">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="MaxDuration">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="MaxTriggers">
+    <xs:simpleContent>
+      <xs:extension base="xs:nonNegativeInteger">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="GroupNumber">
+    <xs:simpleContent>
+      <xs:extension base="xs:nonNegativeInteger">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="TResolution">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="VResolution">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="DelayTrain">
+    <xs:simpleContent>
+      <xs:extension base="xs:boolean">
+        <xs:attributeGroup ref="XTSM_general_atts"/>
+        <xs:attributeGroup ref="XTSM_viewer_atts"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:attributeGroup name="XTSM_viewer_atts">
+    <xs:attribute name="highlighted" type="xs:boolean"/>
+    <xs:attribute name="selected" type="xs:boolean"/>
+    <xs:attribute name="locked" type="xs:boolean"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="XTSM_general_atts">
+    <xs:attribute name="uid" type="xs:string"/>
+    <xs:attribute name="disabled" type="xs:boolean"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="XTSM_mathparser_atts">
+    <xs:attribute name="current_value" type="xs:string"/>
+    <xs:attribute name="parser_error" type="xs:string"/>
+  </xs:attributeGroup>
+
+</xs:schema>

@@ -1,0 +1,76 @@
+/* CSS Document */
+
+<style id="stylesheet0" type="text/css">
+<!--    .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}-->
+	.CodeMirror {
+  overflow-y: scroll;
+  overflow-x: scroll;
+  width: auto;
+  height: 500px;
+  line-height: 1em;
+  font-family: source code pro;
+  _position: relative; /* IE6 hack */
+}
+    span.CodeMirror-matchhighlight 						{ background: #e9e9e9 ;}
+    span.CodeMirror-matchhighlight2 					{ background: #ffcccc ;}
+    .CodeMirror-focused span.CodeMirror-matchhighlight 	{ background: #e7e4ff; !important }
+	ul{font-family: source code pro;}
+	.xtsm_TimingGroupData_head 	{ font-family: source code pro;background: #ddddaa ;
+	 							border-top: solid thin black; }
+	.xtsm_TimingGroupData_body 	{ font-family: source code pro;background: #eeeebb ;	 								 
+								border-left: dotted thin black ;
+								border-bottom: dotted thin black;}								
+    .xtsm_SubSequence_body 	{ background: #ffeeee ;}
+	.xtsm_Sequence_body 	{ background: #eeffee ;}
+	.xtsm_Edge_body 		{ background: #eeeeff ;}
+	.xtsm_XTSM_body 		{ background: #ffffee ;}
+	.xtsm_Channel_head 	{ font-family: source code pro;background: #ffffaa ;
+	 							border-top: solid thin black ;
+								border-bottom: dashed thin black;}
+	.xtsm_SubSequence_head 	{ font-family: source code pro; background: #ffcccc;
+	   							border-top: solid thin black ;
+								border-bottom: dashed thin black ;}
+	.xtsm_Sequence_head 	{ font-family: source code pro; background: #ccffcc;
+	   							border-top: solid thin black ;
+								border-bottom: dashed thin black ;}
+	.xtsm_XTSM_head 		{ font-family: source code pro;background: #ffffcc;
+	   							border-top: solid thin black ;
+								border-bottom: dashed thin black ;}
+	.xtsm_Edge_head 		{ font-family: source code pro;background: #ccccff ;
+	 							border-top: solid thin black ;
+								border-bottom: dashed thin black;}
+	.xtsm_Sample_head 		{ font-family: source code pro;background: #00ccff ;
+	 							border-top: solid thin black ;
+								border-bottom: dashed thin black;}
+	.xtsm_Parameter_head 	{ font-family: source code pro;background: #ffffaa ;
+	 							border-top: solid thin black ;
+								border-bottom: dashed thin black;}
+	.xtsm_Interval_head 	{ font-family: source code pro;background: #cceeff ;
+	 							border-top: solid thin black; }
+	.xtsm_Interval_body 	{ font-family: source code pro;background: #eeeeff ;	 								 
+								border-left: dotted thin black ;
+								border-bottom: dotted thin black;}
+	.xtsm_SerialTransfer_head 	{ font-family: source code pro;background: #ddaa77 ;
+	 							border-top: solid thin black; }
+	.xtsm_SerialTransfer_body 	{ font-family: source code pro;background: #eecc99 ;	 								 
+								border-left: dotted thin black ;
+								border-bottom: dotted thin black;}
+	.xtsm_Graph_body 		{ font-family: source code pro;background: #ffffff ;
+								border-bottom: dotted thin black;}
+	.xtsm_Edge_Time 		{ font-family: source code pro;background: #ffccff;
+	   							width:70px;	}
+	.xtsm_Edge_Value 		{ font-family: source code pro;background: #ffccff;
+	   							width:50px;	}
+	.highlighted			{background-color:#99FF33;}
+	.disabled				{background-color:#ffffff;color: #aaaaaa;}
+    .server_push_textarea   {background-color:#000000;color: #FFFFFF;
+                             width:90%; height:100px;}
+
+.custom-menu {
+    z-index:1000;
+    position: absolute;
+    background-color:#C0C0C0;
+    border: 1px solid black;
+    padding: 2px;
+}
+</style>

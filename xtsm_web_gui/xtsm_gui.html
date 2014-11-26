@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html><head>
+	<title>Experiment Sequence Viewer</title>
+	<style>
+	.CodeMirror { overflow-y: scroll;
+				  overflow-x: scroll;
+				  width: auto;
+				  height: 500px;
+				  line-height: 1em;
+				  font-family: monospace;
+				  _position: relative; /* IE6 hack */}
+    .hdiode_xml_tree_titlediv {border:solid; border-width:thin; background-color:#9C3; }
+    .hdiode_xml_tree_cmdiv {border:solid; border-width:thin; }
+    .hdiode_xml_tree_treediv {border:solid; border-width:thin; }
+	.note-gutter { width: 3em; background: grey; }
+    </style>
+	<script src="codemirror-3.0/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-3.0/lib/codemirror.css">
+    <script src="codemirror-3.0/mode/xml/xml.js"></script>
+	<script language="javascript" type="text/javascript" src="jquery/jquery-1.7.1.js"></script>
+	<script language="javascript" type="text/javascript" src="jquery/jquery.hotkeys-0.7.9.js"></script>
+	<script language="javascript" type="text/javascript" src="jquery/jqueryui.js" ></script>
+	<script language="javascript" type="text/javascript" src="jquery/jquery.mousewheel.min.js" ></script>
+	<script language="javascript" type="text/javascript" src="jquery/jquery.iviewer.js"></script>
+	<link rel="stylesheet" href="jquery/jquery.iviewer.css" />
+	<script src="codemirror-3.0/lib/util/closetag.js"></script>
+	<script language="javascript" type="text/javascript" src="saxonce/Saxonce.nocache.js"></script>    
+	<script language="javascript" type="text/javascript" src="xtsm_gui.js"></script>
+	<script language="javascript" type="text/javascript" src="help.js"></script>
+	<script language="javascript" type="text/javascript" src="zxml.js"></script>
+	<link id="stylesheet" rel="stylesheet" type="text/css" href="xtsm.css">
+    <script src="js/dropit.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="js/dropit.css" type="text/css" />
+
+</head>
+<body>
+	<script language="javascript" type="text/javascript">
+		if ("ActiveXObject" in window) {
+			//Some functions don't work in IE (big surprise...), so stop it from loading the page.
+			alert('This project does not support use of Internet Explorer. Try using another web browser.');
+			text = '<script type="text/undefined">';
+			document.write(text);
+		} else {
+		}
+	</script>
+	<div id="Create_File_Operations" style="border:1px solid;">
+		<img id = "file_menu" src="images/RightFillTriangleIcon.png" height="15px"/>
+		File Operations
+		&nbsp;<img id = "refresh" src="images/seqicon_refresh.png" height="20px" title="Refresh"/>
+		&nbsp;<select id="file_type" title="Select file type">
+			<option>XTSM File</option>
+			<option>XSL Transform</option>
+		</select>
+		<div id="file_operations" style="display:none" data-switch=0>
+			<table><tr>
+				<p id="file_op" style="display:none"/>
+				<p id='file_info_div'></p>
+				<td>
+					File to Load:
+					<input type="text" id="load_file" size="50"/>
+					<img id="load" src="/images/seqicon_load.png" height="20px" title="Load Now" />
+					<br />
+					File to Save:
+					<input type="text" id="save_file" size="50"/>
+					<img id="save" src="/images/seqicon_save.png" height="20px" title="Save Now" />
+				</td>
+			</tr></table>
+		</div>
+	</div>
+	<div><br /></div>
+	<div id="Create_Parser_Operations" style="border:1px solid;">
+		<img id="parser_menu" src="/images/RightFillTriangleIcon.png" height="15px"/>
+		Server Communications
+		<div id="parser_operations" style="display:none" data-switch=0>
+			<input type="submit" value="Parse Preview" id="parse_preview_button" />
+			<input type="submit" value="Post as Active Experiment" id="post_xtsm_button"/>
+			<input type="submit" value="Retrieve Active Experiment" id="retrieve_xtsm_button"/>
+			Data Context of Experiment:
+			<input type="text" id="pxi_dc" value="PXI" title="Choose DC of the PXI system you want to use. Inputs should be listed in Data Contexts under Analysis Console. Ex: default:169.254.174.202"/>
+			<div id="parser_data_div">
+				<input type="submit" value="Disable Python Server" id="disable_python_socket_button"/>
+				<input type="submit" value="Launch Python" id="launch_python_button" />
+				<input type="submit" value="Test Transfer Speed to Python" id="test_pythontransferspeed_button" />
+			</div>
+			<div>
+				Compress on Post/Retrieve
+			<input type="checkbox" id="compress_on_post_button" title="When checked, compresses this html division."/>
+			<span id="python_speed_result" value=""></span>
+			</div>
+            Server Messages:<br /><div id="Server_Messages_div"></div>
+		</div>
+	</div>
+	<div><br /></div>
+	<div id="server_push_div" style="border:1px solid;">
+		<img id="server_push_menu" src="/images/RightFillTriangleIcon.png" height="15px"/>
+		Server Push
+		<div id="server_push_output_div" style="display:none" data-switch=0> 
+		</div>
+	</div>
+	<div><br /></div>
+
+	<div id="Create_Console_Operations" style="border:1px solid;">
+		<img id="python_menu" src="/images/RightFillTriangleIcon.png" height="15px"/>
+		Python Console
+		<div id="python_operations" style="display:none; overflow:auto; width:2000px" data-switch=0>
+			Python response will appear here:
+			<br />
+			<textarea rows="10" cols="70" id="python_response_textarea" onfocus=""></textarea>
+			<br />
+			Enter python code here:
+			<br />
+			<textarea rows="10" cols="70" id="python_input_textarea" onfocus="" ></textarea>
+			<input type="submit" value="Execute Now" id="python_submit_code_button"/>
+			<select size="10" id="python_variable_list">
+				<option>Python Variables:</option>
+			</select>
+			<input type="submit" value="Ping for Data Contexts" id="data_contexts_button"/>
+			<select size="10" id="data_contexts_list">
+				<option>Data Contexts:</option>
+			</select>
+		</div>
+	</div>
+	<div><br /></div>
+	<div id="Create_Plot_Operations" style="border:1px solid;">
+		<img id="plot_menu" src="/images/RightFillTriangleIcon.png" height="15px"/>
+		Plot Console
+		<div id="plot_operations" style="display:none" data-switch=0>
+			<table id="analysis_plot_table" border=1>
+				<tr><td>
+					<img id="remove_plot" src="/jquery/img/iviewer.zoom_out.gif" height="15px">
+					Current Plots:
+					<img id="add_plot" src="/jquery/img/iviewer.zoom_in.gif" height="15px">
+				</td></tr><tr><td>
+					<select size="18" id="python_analysis_plot_select">
+					</select>
+				</td></tr><tr><td>
+					<span id="python_analysis_plots_coords">(000.0, 000.0)</span>
+				</td></tr>
+			</table>
+		</div>
+	</div>
+	<div><br /></div>
+	<div id="Create_History_Operations" style="border:1px solid;">
+		<img id="history_menu" src="/images/RightFillTriangleIcon.png" height="15px">
+		History / Undo 
+		&nbsp;<input type="image" id="undo" src="/images/seqicon_undo.png" height="15px" title="Undo"/>
+		&nbsp;<input type="image" id="redo" src="/images/seqicon_redo_inactive.png" height="15px" title="Redo" disabled="disabled"/>
+		<div id="history_operations" style="display:none">
+			<div id="history_subdiv">
+			Undo Levels:
+				<input id="undo_levels" value="4" type="text" title="Note: Takes effect upon making a change to the tree."/>
+			</div>
+		</div>
+	</div>
+	<div><br /></div>
+	<div id="Create_Display_Operations" style="border:1px solid;">
+		<img id="display_menu" src="/images/RightFillTriangleIcon.png" height="15px">
+		Display and Help Options
+		<div id="display_operations" style="display:none">
+			<input id="light_dark_button" type="button" value="Dark Room Color"/>
+			<br />
+			Show Help:
+			<input id='show_help' name='show_help' type='checkbox'/>
+			<br />
+			Font Type
+			<input id='font_type' type='text' title="Changes the tree's font type. Default is monospace."/>
+			Font Size
+			<input id='font_size' type='text' title="Changes the tree's font size, numbers only. Default size is 14."/>
+			<div name='tree_build_div' id='tree_build_div'></div>
+		</div>
+	</div>
+	<div><br /></div>
+	<div id="Create_Search_Operations" style="border:1px solid;">
+		<img id="search_menu" src="/images/RightFillTriangleIcon.png" height="15px">
+		Search Tools
+		<div id="search_operations" style="display:none">
+			<br />
+			Search XML: 
+			<input id="search_input" type="text" value="enter search term" style="font-style:italic"/>
+			<div id="search_results_div"></div>
+		</div>
+	</div>
+	<div><br /></div>
+	<div id="Create_Tree" style="border:1px solid;">
+		<script language="javascript" type="text/javascript">main(); </script>
+	</div>
+</body>
+</html>
