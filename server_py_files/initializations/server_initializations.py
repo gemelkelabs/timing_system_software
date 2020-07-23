@@ -16,7 +16,7 @@ import uuid,sys
 #for mod in imports[uuid.getnode()]:
 #    setattr(sys.modules[__name__],mod,__import__(mod))
 
-fqhe_master_init="""
+fqhe_main_init="""
 """
 #self.dataContexts['default'].update({'Test_instrument':glab_instrument.Glab_Instrument(params={'server':self,'create_example_pollcallback':True})})
 
@@ -40,6 +40,6 @@ print 'here is pfaffians init script - im in server_initializations.py'
 # the dictionary below has an entry for each machine, with a script
 # that should be executed at the time the server is initialized
 initializations={264840316731455L: natural_init, 
-                 11603160389L: fqhe_master_init,
+                 11603160389L: fqhe_main_init,
                  161342404561L: pfaffian_init }
 
