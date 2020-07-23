@@ -49,7 +49,7 @@ file_locations={"raw_buffer_folders" : {69129942709L:"c:/wamp/www/raw_buffers/DB
 """
 
 """
-11603160389 = Rb_analysis/fqhe master?
+11603160389 = Rb_analysis/fqhe main?
 161342404561 = pfaffian
 264840316731455L: nate's laptop
 69129942709L: Vortex

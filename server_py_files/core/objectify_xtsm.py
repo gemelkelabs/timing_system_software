@@ -3409,12 +3409,12 @@ class Command_Library:
         a single stream of data - for example, for some devices (particularly FPGA-based) higher level
         functions require more complicated data inputs, despite the fact that their operation can be explained
         and controlled by a combination of simple elements - consider a "delay train clocker", which repeatedly counts a
-        certain number of its own clock cycles before issuing one or more clock signals to slaved devices : two
+        certain number of its own clock cycles before issuing one or more clock signals to subordinated devices : two
         pieces of information are required for each cycle - how many cycles to wait, and which devices to clock.
         This can be represented as a combination of two timing groups - one which has a single channel which is
         self-clocking (the "delaytrain"), and a second timing group which represents the clocking channels for the
-        slave devices.  Suppose the delaytrain clock cycle count is represented by a 32-bit integer, and there are
-        eight slave devices, requiring 8 bits to flag which channels should be triggered.  These two groups can
+        subordinate devices.  Suppose the delaytrain clock cycle count is represented by a 32-bit integer, and there are
+        eight subordinate devices, requiring 8 bits to flag which channels should be triggered.  These two groups can
         be entered in XTSM as if they are independent entities, and the timingstrings calculated as all others by
         standard parsing algorithms.  In a final step their timingstrings must be delivered to the hardware, which
         is most simply accomplished by combining the two fictional groups into a single group for the single piece
